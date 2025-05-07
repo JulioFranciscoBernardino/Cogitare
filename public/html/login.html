@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cogitare - Login Administrador</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/login.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Bem-vindo à Administração Cogitare</h1>
+        <h2>Para acessar, entre com seu Usuario e Senha</h2>
+        <form action="login">
+            <label for="usuario">Usuario</label><br>
+            <input type="text" id="usuario" class="usuario" name="usuario" required>
+            <br>
+            <br>
+            <label for="senha">Senha</label><br>
+            <input type="password" id="senha" class="senha" name="senha" required>
+            <br><br> 
+            <button type="button" onclick="verificaUsuario()">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
