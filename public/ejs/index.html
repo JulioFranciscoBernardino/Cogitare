@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cogitare - Dashboard Admin</title>
+  <link rel="stylesheet" href="../css/index.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2 class="logo">Cogitare</h2>
+      <nav>
+        <ul>
+            <li><a href="#"><i data-lucide="layout-dashboard"></i> Painel</a></li>
+            <li><a href="#"><i data-lucide="user-heart"></i> Cuidadores</a></li>
+            <li><a href="#"><i data-lucide="users"></i> Responsáveis</a></li>
+            <li><a href="#"><i data-lucide="user"></i> Idosos</a></li>
+            <li><a href="#"><i data-lucide="calendar-check"></i> Atendimentos</a></li>
+            <li><a href="#"><i data-lucide="wallet"></i> Pagamentos</a></li>
+            <li><a href="#"><i data-lucide="history"></i> Histórico</a></li>
+            <li><a href="#"><i data-lucide="log-out"></i> Sair</a></li>
+          </ul>          
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header>
+        <h1>Olá, Administrador 👋</h1>
+        <p>Bem-vindo ao painel de controle da Cogitare</p>
+      </header>
+
+      <section class="cards">
+        <div class="card">
+          <h3>Cuidadores</h3>
+          <p id="qtdCuidadores">--</p>
+        </div>
+        <div class="card">
+          <h3>Responsáveis</h3>
+          <p id="qtdResponsaveis">--</p>
+        </div>
+        <div class="card">
+          <h3>Idosos</h3>
+          <p id="qtdIdosos">--</p>
+        </div>
+        <div class="card">
+          <h3>Atendimentos Ativos</h3>
+          <p id="atendimentosAtivos">--</p>
+        </div>
+        <div class="card">
+          <h3>Pagamentos Pendentes</h3>
+          <p id="pagamentosPendentes">--</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/dashboard.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  
+</body>
+</html>
