@@ -1,10 +1,10 @@
 
-require('dotenv').config(); // carrega variáveis do .env
+require('dotenv').config(); 
 const express = require('express');
 const sql = require('mssql');
 const path = require('path');
 
-// Configuração do banco de dados via .env
+
 const dbConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
