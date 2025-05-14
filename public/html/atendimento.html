@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cogitare - Idosos</title>
-  <link rel="stylesheet" href="../css/idoso.css" />
+  <title>Cogitare - Atendimentos</title>
+  <link rel="stylesheet" href="../css/atendimentol.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -21,7 +20,7 @@
           <li><a href="responsavel.html"><i data-lucide="users"></i> Responsáveis</a></li>
           <li><a href="idosos.html"><i data-lucide="users"></i> Idosos</a></li>
           <li><a href="atendimento.html"><i data-lucide="calendar-check"></i> Atendimentos</a></li>
-          <li><a href=""><i data-lucide="wallet"></i> Pagamentos</a></li>
+          <li><a href="#"><i data-lucide="wallet"></i> Pagamentos</a></li>
           <li><a href="#"><i data-lucide="history"></i> Histórico</a></li>
           <li><a href="#"><i data-lucide="log-out"></i> Sair</a></li>
         </ul>
@@ -30,22 +29,34 @@
 
     <main class="main-content">
       <header class="header">
-        <h1>Lista de Idosos</h1>
-        <input type="text" placeholder="Buscar idoso..." class="search-input" />
+        <h1>Atendimentos</h1>
+        <input type="text" placeholder="Buscar atendimento..." class="search-input" />
       </header>
 
-      <section class="card-grid">
-        <!-- Idoso exemplo -->
-        <div class="card">
-          <img src="../img/idoso1.jpg" alt="Foto Idoso" />
-          <div class="card-info">
-            <h3>José da Silva</h3>
-            <p>Idade: 82 anos</p>
-            <p>Condições: Hipertensão, Diabetes</p>
-            <a href="responsavel.html?id=1" class="link-responsavel">Ver Responsável</a>
-          </div>
-        </div>
-        <!-- Repita este bloco para mais idosos -->
+      <section class="table-container">
+        <table class="atendimento-table">
+          <thead>
+            <tr>
+              <th>Idoso</th>
+              <th>Cuidador</th>
+              <th>Data</th>
+              <th>Horário</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>José da Silva</td>
+              <td>Maria Souza</td>
+              <td>14/05/2025</td>
+              <td>14:00</td>
+              <td><span class="status status-concluido">Concluído</span></td>
+              <td><button class="btn-detalhes">Ver Detalhes</button></td>
+            </tr>
+            <!-- Repita as linhas conforme necessário -->
+          </tbody>
+        </table>
       </section>
     </main>
   </div>
