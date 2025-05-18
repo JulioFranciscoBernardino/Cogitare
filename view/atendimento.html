@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cogitare - Atendimentos</title>
+  <link rel="stylesheet" href="../css/atendimentol.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2 class="logo">Cogitare</h2>
+      <nav>
+        <ul>
+          <li><a href="index.html"><i data-lucide="layout-dashboard"></i> Painel</a></li>
+          <li><a href="cuidador.html"><i data-lucide="users"></i> Cuidadores</a></li>
+          <li><a href="responsavel.html"><i data-lucide="users"></i> Responsáveis</a></li>
+          <li><a href="idosos.html"><i data-lucide="users"></i> Idosos</a></li>
+          <li><a href="atendimento.html"><i data-lucide="calendar-check"></i> Atendimentos</a></li>
+          <li><a href="#"><i data-lucide="wallet"></i> Pagamentos</a></li>
+          <li><a href="#"><i data-lucide="history"></i> Histórico</a></li>
+          <li><a href="#"><i data-lucide="log-out"></i> Sair</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Atendimentos</h1>
+        <input type="text" placeholder="Buscar atendimento..." class="search-input" />
+      </header>
+
+      <section class="table-container">
+        <table class="atendimento-table">
+          <thead>
+            <tr>
+              <th>Idoso</th>
+              <th>Cuidador</th>
+              <th>Data</th>
+              <th>Horário</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>José da Silva</td>
+              <td>Maria Souza</td>
+              <td>14/05/2025</td>
+              <td>14:00</td>
+              <td><span class="status status-concluido">Concluído</span></td>
+              <td><button class="btn-detalhes">Ver Detalhes</button></td>
+            </tr>
+            <!-- Repita as linhas conforme necessário -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

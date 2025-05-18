@@ -37,7 +37,4 @@ function verificaUsuario() {
         senhaInput.focus();
         return;
     }
-
-    // Se tudo estiver ok
-    alert('Login válido! Enviando dados...');
 }

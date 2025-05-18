@@ -1,0 +1,124 @@
+.table-container {
+    margin-left: 270px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+  }
+  
+  .atendimento-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+  
+  .atendimento-table thead {
+    background-color: #a26fff;
+    color: white;
+  }
+  
+  .atendimento-table th, .atendimento-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .atendimento-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .status-concluido {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-pendente {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .btn-detalhes {
+    background-color: #a26fff;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* SIDEBAR */
+  .sidebar {
+    width: 250px;
+    background-color: #a26fff;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  
+  .sidebar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  
+  .sidebar nav ul {
+    list-style: none;
+  }
+  
+  .sidebar nav ul li {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar nav ul li a:hover {
+    opacity: 0.8;
+    transform: translateX(5px);
+  }
+  
+  .sidebar nav ul li a i {
+    width: 20px;
+    height: 20px;
+  }

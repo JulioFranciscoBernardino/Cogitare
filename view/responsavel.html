@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cogitare - Responsáveis</title>
+    <link rel="stylesheet" href="../css/responsavel.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 class="logo">Cogitare</h2>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i data-lucide="layout-dashboard"></i> Painel</a></li>
+                    <li><a href="cuidador.html"><i data-lucide="users"></i> Cuidadores</a></li>
+                    <li><a href="responsavel.html"><i data-lucide="users"></i> Responsáveis</a></li>
+                    <li><a href="idoso.html"><i data-lucide="users"></i> Idosos</a></li>
+                    <li><a href="atendimento.html"><i data-lucide="calendar-check"></i> Atendimentos</a></li>
+                    <li><a href="#"><i data-lucide="wallet"></i> Pagamentos</a></li>
+                    <li><a href="#"><i data-lucide="history"></i> Histórico</a></li>
+                    <li><a href="#"><i data-lucide="log-out"></i> Sair</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Lista de Responsáveis</h1>
+                <input type="text" placeholder="Buscar responsável..." class="search-input" />
+            </header>
+
+            <section class="card-grid">
+                <!-- Responsável exemplo -->
+                <div class="card">
+                    <img src="../img/responsavel1.jpg" alt="Foto Responsável">
+                    <div class="card-info">
+                        <h3>João Lima</h3>
+                        <p>Contato: joao.lima@email.com</p>
+                        <p>Telefone: (11) 91234-5678</p>
+                        <button class="btn-ver">Ver Perfil</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="../img/responsavel2.jpg" alt="Foto Responsável">
+                    <div class="card-info">
+                        <h3>Ana Paula</h3>
+                        <p>Contato: ana.paula@email.com</p>
+                        <p>Telefone: (21) 98765-4321</p>
+                        <button class="btn-ver">Ver Perfil</button>
+                    </div>
+                </div>
+                <!-- Adicione mais cards conforme necessário -->
+            </section>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

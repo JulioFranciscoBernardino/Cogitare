@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cogitare - Cuidadores</title>
+    <link rel="stylesheet" href="../css/cuidador.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2 class="logo">Cogitare</h2>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i data-lucide="layout-dashboard"></i> Painel</a></li>
+                    <li><a href="cuidador.html"><i data-lucide="users"></i> Cuidadores</a></li>
+                    <li><a href="responsavel.html"><i data-lucide="users"></i> Responsáveis</a></li>
+                    <li><a href="idoso.html"><i data-lucide="users"></i> Idosos</a></li>
+                    <li><a href="atendimento.html"><i data-lucide="calendar-check"></i> Atendimentos</a></li>
+                    <li><a href="#"><i data-lucide="wallet"></i> Pagamentos</a></li>
+                    <li><a href="#"><i data-lucide="history"></i> Histórico</a></li>
+                    <li><a href="#"><i data-lucide="log-out"></i> Sair</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Lista de Cuidadores</h1>
+                <input type="text" placeholder="Buscar cuidador..." class="search-input" />
+            </header>
+
+            <section class="card-grid">
+                <!-- Cuidador exemplo -->
+                <div class="card">
+                    <img src="../img/cuidador1.jpg" alt="Foto Cuidador">
+                    <div class="card-info">
+                        <h3>Maria Souza</h3>
+                        <p>Especialidades: Alzheimer, Pós-cirúrgico</p>
+                        <p>Experiência: 4 anos</p>
+                        <button class="btn-ver">Ver Perfil</button>
+                    </div>
+                </div>
+                <!-- Repita este bloco para mais cuidadores -->
+            </section>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

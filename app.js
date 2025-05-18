@@ -3,6 +3,16 @@ require('dotenv').config();
 const express = require('express');
 const sql = require('mssql');
 const path = require('path');
+const session = require('express-session');
+
+app.use(session({
+    secret: process.env.KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 30 * 60 * 1000 // 30 minutos
+    }
+}));
 
 
 const dbConfig = {
