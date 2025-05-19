@@ -13,9 +13,9 @@ const usuarioController = {
                     email: usuario.email,
                     loginTime: Date.now()
                 };
-                res.redirect('/public/html/index.html');
+                res.redirect('/view/index.html');
             } else {
-                res.redirect('/public/html/login.html?erro=credenciais');
+                res.redirect('/view/login.html?erro=credenciais');
             }
         } catch (error) {
             res.status(500).send('Erro interno no servidor.');
@@ -24,7 +24,7 @@ const usuarioController = {
 
     logout(req, res) {
         req.session.destroy(() => {
-            res.redirect('/public/html/login.html?logout=true');
+            res.redirect('/view/login.html?logout=true');
         });
     }
 };

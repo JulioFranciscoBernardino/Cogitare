@@ -4,12 +4,12 @@ const sql = require('mssql');
 const path = require('path');
 const session = require('express-session');
 
-const app = express(); // 👉 Isso vem antes de usar app.use
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Sessão (30 minutos de duração)
 app.use(session({
-    secret: process.env.KEY || 'chave-secreta-cogitare',
+    secret: process.env.KEY || 'f6517cf5b71f088613fdac5bcc3f5253d749720256b8d7bfb523a9f3a7cc708417b62d6efd3fbe73e96a310b3e6ba27219c5acf9c3685a3bc0dff286ee79a500',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Serve arquivos estáticos da pasta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'view')));
 
 // Configuração do banco de dados
 const dbConfig = {
@@ -41,7 +41,7 @@ const dbConfig = {
 app.use((req, res, next) => {
     if (req.session.usuario && (Date.now() - req.session.ultimaAtividade > 30 * 60 * 1000)) {
         req.session.destroy(); // Expirou
-        return res.redirect('/public/html/LoginForm');
+        return res.redirect('/view/login.html');
     } else if (req.session.usuario) {
         req.session.ultimaAtividade = Date.now(); // Atualiza atividade
     }
@@ -51,15 +51,15 @@ app.use((req, res, next) => {
 // Rota raiz: redireciona para o login ou dashboard com base na sessão
 app.get('/', (req, res) => {
     if (req.session.usuario) {
-        res.redirect('/public/html/dashboard.html');
+        res.redirect('/view/index.html');
     } else {
-        res.redirect('/public/html/LoginForm');
+        res.redirect('/view/login.html');
     }
 });
 
 // Rota para exibir o formulário de login
-app.get('/public/html/LoginForm', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
+app.get('/view/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'login.html'));
 });
 
 // Conexão com o banco
