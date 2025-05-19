@@ -1,54 +1,54 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
-const sql = require('mssql');
 const path = require('path');
 const session = require('express-session');
+const usuarioRoute = require('./routes/usuarioRoute');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Sessão (30 minutos de duração)
+// Sessão 30 minutos
 app.use(session({
-    secret: process.env.KEY || 'f6517cf5b71f088613fdac5bcc3f5253d749720256b8d7bfb523a9f3a7cc708417b62d6efd3fbe73e96a310b3e6ba27219c5acf9c3685a3bc0dff286ee79a500',
+    secret: process.env.KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 30 * 60 * 1000 // 30 minutos
+        maxAge: 30 * 60 * 1000
     }
 }));
 
-// Middleware para analisar o corpo da requisição
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serve arquivos estáticos da pasta 'view'
-app.use(express.static(path.join(__dirname, 'view')));
-
-// Configuração do banco de dados
-const dbConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    port: parseInt(process.env.DB_PORT, 10),
-    database: process.env.DB_DATABASE,
-    options: {
-        encrypt: true,
-        trustServerCertificate: true
-    }
-};
-
-// Middleware para verificar se a sessão expirou
+// Middleware para verificar sessão expirada
 app.use((req, res, next) => {
-    if (req.session.usuario && (Date.now() - req.session.ultimaAtividade > 30 * 60 * 1000)) {
-        req.session.destroy(); // Expirou
-        return res.redirect('/view/login.html');
-    } else if (req.session.usuario) {
-        req.session.ultimaAtividade = Date.now(); // Atualiza atividade
+    if (req.session.usuario && (Date.now() - req.session.usuario.loginTime > 30 * 60 * 1000)) {
+        req.session.destroy();
+        return res.status(401).json({ sucesso: false, mensagem: 'Sessão expirada' });
     }
     next();
 });
 
-// Rota raiz: redireciona para o login ou dashboard com base na sessão
+// Rotas públicas (login, JS/CSS/imagens)
+app.use('/view/login.html', express.static(path.join(__dirname, 'view', 'login.html')));
+app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
+app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+app.use('/view', express.static(path.join(__dirname, 'view')));
+
+
+// Protege o index.html
+app.get('/view/index.html', (req, res) => {
+    if (!req.session.usuario) {
+        return res.redirect('/view/login.html');
+    }
+    res.sendFile(path.join(__dirname, 'view', 'index.html'));
+});
+
+// Usar rota usuário
+app.use('/', usuarioRoute);
+
+// Redirecionamento da raiz
 app.get('/', (req, res) => {
     if (req.session.usuario) {
         res.redirect('/view/index.html');
@@ -57,21 +57,6 @@ app.get('/', (req, res) => {
     }
 });
 
-// Rota para exibir o formulário de login
-app.get('/view/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'view', 'login.html'));
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
-
-// Conexão com o banco
-sql.connect(dbConfig)
-    .then(pool => {
-        if (pool.connected) {
-            console.log('Conectado ao SQL Server com sucesso.');
-            app.listen(PORT, () => {
-                console.log(`Servidor rodando na porta ${PORT}`);
-            });
-        }
-    })
-    .catch(err => {
-        console.error('Erro ao conectar ao SQL Server:', err);
-    });

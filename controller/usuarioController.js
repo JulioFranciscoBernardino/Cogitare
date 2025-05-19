@@ -2,23 +2,23 @@ const Usuario = require('../model/usuarioModel');
 
 const usuarioController = {
     async login(req, res) {
-        const { email, senha } = req.body;
+        const { usuario, senha } = req.body;
 
         try {
-            const usuario = await Usuario.validarLogin(email, senha);
-            if (usuario) {
+            const usuarioLogado = await Usuario.validarLogin(usuario, senha);
+            if (usuarioLogado) {
                 req.session.usuario = {
-                    id: usuario.id,
-                    nome: usuario.nome,
-                    email: usuario.email,
+                    id: usuarioLogado.id,
+                    nome: usuarioLogado.nome,
+                    tipo: usuarioLogado.tipo,
                     loginTime: Date.now()
                 };
-                res.redirect('/view/index.html');
+                res.json({ sucesso: true });
             } else {
-                res.redirect('/view/login.html?erro=credenciais');
+                res.json({ sucesso: false, mensagem: 'Usuário ou senha inválidos.' });
             }
         } catch (error) {
-            res.status(500).send('Erro interno no servidor.');
+            res.status(500).json({ sucesso: false, mensagem: 'Erro interno no servidor.' });
         }
     },
 
