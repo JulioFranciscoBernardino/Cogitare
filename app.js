@@ -21,7 +21,7 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serve arquivos estáticos da pasta 'public'
+// Serve arquivos estáticos da pasta 'view'
 app.use(express.static(path.join(__dirname, 'view')));
 
 // Configuração do banco de dados
