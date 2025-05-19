@@ -1,12 +1,15 @@
-
 require('dotenv').config(); 
 const express = require('express');
 const sql = require('mssql');
 const path = require('path');
 const session = require('express-session');
 
+const app = express(); // 👉 Isso vem antes de usar app.use
+const PORT = process.env.PORT || 3000;
+
+// Sessão (30 minutos de duração)
 app.use(session({
-    secret: process.env.KEY,
+    secret: process.env.KEY || 'chave-secreta-cogitare',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -14,7 +17,14 @@ app.use(session({
     }
 }));
 
+// Middleware para analisar o corpo da requisição
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
+// Serve arquivos estáticos da pasta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Configuração do banco de dados
 const dbConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -27,19 +37,32 @@ const dbConfig = {
     }
 };
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// Middleware para verificar se a sessão expirou
+app.use((req, res, next) => {
+    if (req.session.usuario && (Date.now() - req.session.ultimaAtividade > 30 * 60 * 1000)) {
+        req.session.destroy(); // Expirou
+        return res.redirect('/public/html/LoginForm');
+    } else if (req.session.usuario) {
+        req.session.ultimaAtividade = Date.now(); // Atualiza atividade
+    }
+    next();
+});
 
-// Serve arquivos estáticos da pasta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+// Rota raiz: redireciona para o login ou dashboard com base na sessão
+app.get('/', (req, res) => {
+    if (req.session.usuario) {
+        res.redirect('/public/html/dashboard.html');
+    } else {
+        res.redirect('/public/html/LoginForm');
+    }
+});
 
-// Defina a rota para a página de login
+// Rota para exibir o formulário de login
 app.get('/public/html/LoginForm', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
 });
 
-
-// Testa a conexão e inicia o servidor
+// Conexão com o banco
 sql.connect(dbConfig)
     .then(pool => {
         if (pool.connected) {
@@ -52,8 +75,3 @@ sql.connect(dbConfig)
     .catch(err => {
         console.error('Erro ao conectar ao SQL Server:', err);
     });
-
-// Rota simples para teste
-app.get('/', (req, res) => {
-    res.send('API Cogitare conectada ao SQL Server!');
-});
