@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const usuarioRoute = require('./routes/usuarioRoute');
+const dbConfig = require('./config/db');
+const sql = require('mssql');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -57,6 +60,36 @@ app.get('/', (req, res) => {
         res.redirect('/view/login.html');
     }
 });
+
+async function migrarSenhas() {
+    try {
+        const pool = await sql.connect(dbConfig);
+        const result = await pool.request()
+            .query('SELECT IdAdministrador, Senha FROM Administrador');
+
+        for (const usuario of result.recordset) {
+            // Evita recriptografar senhas já com hash
+            if (usuario.Senha.startsWith('$2b$')) continue;
+
+            const senhaHash = await bcrypt.hash(usuario.Senha, 10);
+
+            await pool.request()
+                .input('Id', sql.Int, usuario.IdAdministrador)
+                .input('SenhaHash', sql.VarChar, senhaHash)
+                .query('UPDATE Administrador SET Senha = @SenhaHash WHERE IdAdministrador = @Id');
+
+            console.log(`Senha criptografada para usuário ID ${usuario.IdAdministrador}`);
+        }
+
+        console.log('Todas as senhas foram criptografadas com sucesso.');
+    } catch (err) {
+        console.error('Erro ao criptografar senhas:', err);
+    }
+}
+
+// Chamada automática na inicialização
+migrarSenhas();
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
