@@ -14,7 +14,7 @@ body {
 
 /* Container central */
 div {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -79,4 +79,8 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.logo{
+    width: 200px;
 }

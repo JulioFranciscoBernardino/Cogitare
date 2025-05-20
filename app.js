@@ -33,8 +33,9 @@ app.use((req, res, next) => {
 app.use('/view/login.html', express.static(path.join(__dirname, 'view', 'login.html')));
 app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
 app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+app.use('/imagens', express.static(path.join(__dirname, 'public', 'imagens')));
 app.use('/view', express.static(path.join(__dirname, 'view')));
+
 
 
 // Protege o index.html
