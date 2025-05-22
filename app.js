@@ -61,34 +61,34 @@ app.get('/', (req, res) => {
     }
 });
 
-async function migrarSenhas() {
-    try {
-        const pool = await sql.connect(dbConfig);
-        const result = await pool.request()
-            .query('SELECT IdAdministrador, Senha FROM Administrador');
-
-        for (const usuario of result.recordset) {
+//async function migrarSenhas() {
+    //try {
+        //const pool = await sql.connect(dbConfig);
+        //const result = await pool.request()
+            //.query('SELECT IdAdministrador, Senha FROM Administrador');
+//
+        //for (const usuario of result.recordset) {
             // Evita recriptografar senhas já com hash
-            if (usuario.Senha.startsWith('$2b$')) continue;
+            //if (usuario.Senha.startsWith('$2b$')) continue;
+//
+            //const senhaHash = await bcrypt.hash(usuario.Senha, 10);
+//
+            //await pool.request()
+//                .input('Id', sql.Int, usuario.IdAdministrador)
+ //               .input('SenhaHash', sql.VarChar, senhaHash)
+ //               .query('UPDATE Administrador SET Senha = @SenhaHash WHERE IdAdministrador = @Id');
+//
+ //           console.log(`Senha criptografada para usuário ID ${usuario.IdAdministrador}`);
+ //       }
 
-            const senhaHash = await bcrypt.hash(usuario.Senha, 10);
-
-            await pool.request()
-                .input('Id', sql.Int, usuario.IdAdministrador)
-                .input('SenhaHash', sql.VarChar, senhaHash)
-                .query('UPDATE Administrador SET Senha = @SenhaHash WHERE IdAdministrador = @Id');
-
-            console.log(`Senha criptografada para usuário ID ${usuario.IdAdministrador}`);
-        }
-
-        console.log('Todas as senhas foram criptografadas com sucesso.');
-    } catch (err) {
-        console.error('Erro ao criptografar senhas:', err);
-    }
-}
+//        console.log('Todas as senhas foram criptografadas com sucesso.');
+ //   } catch (err) {
+  //      console.error('Erro ao criptografar senhas:', err);
+  //  }
+//}
 
 // Chamada automática na inicialização
-migrarSenhas();
+//migrarSenhas();
 
 
 app.listen(PORT, () => {

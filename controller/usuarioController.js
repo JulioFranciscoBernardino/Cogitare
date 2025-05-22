@@ -1,3 +1,5 @@
+const sql = require('mssql');
+const dbConfig = require('../config/db');
 const Usuario = require('../model/usuarioModel');
 
 const usuarioController = {
@@ -8,9 +10,9 @@ const usuarioController = {
             const usuarioLogado = await Usuario.validarLogin(usuario, senha);
             if (usuarioLogado) {
                 req.session.usuario = {
-                    id: usuarioLogado.id,
-                    nome: usuarioLogado.nome,
-                    tipo: usuarioLogado.tipo,
+                    id: usuarioLogado.IdAdministrador || usuarioLogado.id,
+                    nome: usuarioLogado.nome || usuarioLogado.Usuario,
+                    tipo: usuarioLogado.tipo || usuarioLogado.Tipo,
                     loginTime: Date.now()
                 };
                 res.json({ sucesso: true });
@@ -18,14 +20,32 @@ const usuarioController = {
                 res.json({ sucesso: false, mensagem: 'Usuário ou senha inválidos.' });
             }
         } catch (error) {
+            console.error('Erro no login:', error);
             res.status(500).json({ sucesso: false, mensagem: 'Erro interno no servidor.' });
         }
     },
 
-    logout(req, res) {
-        req.session.destroy(() => {
-            res.redirect('/view/login.html?logout=true');
-        });
+    async logout(req, res) {
+        try {
+            const idAdm = req.session.usuario?.id;
+            if (idAdm) {
+                const pool = await sql.connect(dbConfig);
+                await pool.request()
+                    .input('IdAdministrador', sql.Int, idAdm)
+                    .execute('sp_Logout_Administrador');
+            }
+
+            req.session.destroy(err => {
+                if (err) {
+                    console.error('Erro ao destruir sessão:', err);
+                    return res.status(500).json({ sucesso: false, mensagem: 'Erro ao encerrar sessão' });
+                }
+                res.redirect('/view/login.html?logout=true');
+            });
+        } catch (error) {
+            console.error('Erro no logout:', error);
+            res.status(500).json({ sucesso: false, mensagem: 'Erro no logout' });
+        }
     }
 };
 
