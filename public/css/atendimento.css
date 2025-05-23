@@ -1,5 +1,6 @@
 .table-container {
     margin-left: 270px;
+    margin-top: 30px;
     background: white;
     padding: 20px;
     border-radius: 12px;
@@ -122,3 +123,14 @@
     width: 20px;
     height: 20px;
   }
+
+  h1, input{
+    margin-left: 50px;
+  }
+
+  .search-input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
+}

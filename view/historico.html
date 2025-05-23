@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cogitare - Cuidadores</title>
-    <link rel="stylesheet" href="/css/cuidador.css" />
-    <link rel="stylesheet" href="/css/sidebar.css" />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cogitare - Histórico</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/historico.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-
 <body>
     <div class="dashboard-container">
-        <!-- NOVA SIDEBAR MODERNA -->
+         <!-- NOVA SIDEBAR MODERNA -->
         <nav class="sidebar">
             <div class="sidebar-top-wrapper">
                 <div class="sidebar-top">
@@ -57,29 +55,45 @@
         </nav>
         <!-- FIM DA NOVA SIDEBAR -->
 
+
+        <!-- MAIN CONTENT -->
         <main class="main-content">
-            <header class="header">
-                <h1>Lista de Cuidadores</h1>
-                <input type="text" placeholder="Buscar cuidador..." class="search-input" />
+            <header>
+                <h1>Histórico de Atendimentos</h1>
             </header>
 
-            <section class="card-grid">
-                <!-- Cuidador exemplo -->
+            <section class="cards">
                 <div class="card">
-                    <img src="/images/cuidador1.jpg" alt="Foto Cuidador" />
-                    <div class="card-info">
-                        <h3>Maria Souza</h3>
-                        <p>Especialidades: Alzheimer, Pós-cirúrgico</p>
-                        <p>Experiência: 4 anos</p>
-                        <button class="btn-ver">Ver Perfil</button>
-                    </div>
+                    <h2>Idoso: Maria Clara</h2>
+                    <p>Data: 15/05/2025</p>
+                    <p>Serviço: Enfermagem</p>
+                    <p>Profissional: Ana Paula</p>
+                    <p>Status: <span class="status finalizado">Finalizado</span></p>
+
                 </div>
-                <!-- Repita este bloco para mais cuidadores -->
+                <div class="card">
+                    <h2>Idoso: João Pedro</h2>
+                    <p>Data: 14/05/2025</p>
+                    <p>Serviço: Psicologia</p>
+                    <p>Profissional: Beatriz Lopes</p>
+                   <p>Status: <span class="status finalizado">Finalizado</span></p>
+
+                </div>
+                <div class="card">
+                    <h2>Idoso: Helena Souza</h2>
+                    <p>Data: 13/05/2025</p>
+                    <p>Serviço: Fisioterapia</p>
+                    <p>Profissional: Rodrigo Silva</p>
+                    <p>Status: <span class="status finalizado">Finalizado</span></p>
+
+                </div>
             </section>
         </main>
     </div>
-    <script>lucide.createIcons();</script>
+
+    <script>
+        lucide.createIcons();
+    </script>
     <script src="/js/sidebar.js"></script>
 </body>
-
 </html>
