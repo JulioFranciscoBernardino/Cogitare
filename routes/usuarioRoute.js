@@ -11,7 +11,7 @@ function autenticar(req, res, next) {
   }
 }
 
-router.get('/usuario', autenticar, (req, res) => {
+router.get('/api/usuario', autenticar, (req, res) => {
   res.json({ nome: req.session.usuario.nome });
 });
 

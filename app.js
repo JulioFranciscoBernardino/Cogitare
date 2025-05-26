@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+// As variáveis dbConfig e sql não são estritamente necessárias aqui se você só as usa no model/controller
+// Mas mantê-las não causa dano.
 const dbConfig = require('./config/db');
 const sql = require('mssql');
 
@@ -12,60 +14,96 @@ const historicoRoute = require('./routes/historicoRoute');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração da sessão (30 minutos)
+// =====================================================================
+// ORDEM DOS MIDDLEWARES É CRÍTICA!
+// =====================================================================
+
+// 1. Configuração da sessão (DEVE VIR PRIMEIRO, antes de qualquer rota ou outro middleware que precise da sessão)
 app.use(session({
     secret: process.env.KEY,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, // ESSENCIAL: Muda para 'false' para evitar sessões vazias
     cookie: {
-        maxAge: 30 * 60 * 1000 // 30 minutos
+        maxAge: 30 * 60 * 1000, // 30 minutos
+        httpOnly: true, // Boa prática de segurança
+        secure: process.env.NODE_ENV === 'production' // Usar cookies seguros em produção (HTTPS)
     }
 }));
 
-// Middlewares para parsing de requisições
+// 2. Middlewares para parsing de requisições (express.urlencoded e express.json)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Middleware para verificar sessão expirada
+// 3. Servir arquivos estáticos (DEVE VIR ANTES do middleware de autenticação/sessão global)
+// Isso garante que arquivos CSS, JS, Imagens, e a própria página de login sejam carregados sem serem barrados.
+// Não precisa listar cada subpasta aqui, basta o diretório pai.
+app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
+app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
+app.use('/imagens', express.static(path.join(__dirname, 'public', 'imagens')));
+app.use('/view', express.static(path.join(__dirname, 'view'))); // Serve todo o diretório 'view'
+
+// 4. Middleware de Autenticação/Sessão (APÓS config da sessão e arquivos estáticos)
+// Este middleware verifica a sessão e protege as rotas.
 app.use((req, res, next) => {
-    // Verifica se a sessão existe e se o tempo de login excedeu 30 minutos
-    if (req.session.usuario && (Date.now() - req.session.usuario.loginTime > 30 * 60 * 1000)) {
+    // Lista de rotas que NÃO PRECISAM DE AUTENTICAÇÃO/SESSÃO
+    const publicPaths = [
+        '/',                       // Rota raiz que redireciona
+        '/login',                  // Rota POST de login (chamada do JS)
+        '/view/login.html'         // Página de login
+    ];
+
+    // Verifica se o caminho da requisição é público (incluindo subcaminhos de estáticos e favicon)
+    const isPublicPath = publicPaths.some(publicPath => req.path === publicPath || (publicPath !== '/' && req.path.startsWith(publicPath + '/'))) ||
+                         req.path.startsWith('/css/') ||
+                         req.path.startsWith('/js/') ||
+                         req.path.startsWith('/imagens/') ||
+                         req.path === '/favicon.ico';
+
+    // Se a rota for pública, continua sem verificar a sessão.
+    if (isPublicPath) {
+        return next();
+    }
+
+    // Se a rota NÃO é pública e não há sessão ativa, redireciona ou retorna 401
+    if (!req.session.usuario) {
+        // *** CORREÇÃO DO TypeError AQUI: Garante que req.headers.accept existe ***
+        if (req.xhr || (req.headers.accept && req.headers.accept.includes('json')) || req.originalUrl.startsWith('/api/')) {
+            return res.status(401).json({ sucesso: false, mensagem: 'Não autorizado. Faça login para acessar esta funcionalidade.' });
+        } else {
+            return res.redirect('/view/login.html?naoAutorizado=true');
+        }
+    }
+
+    // Se a sessão existe, verifica se expirou
+    if (Date.now() - req.session.usuario.loginTime > 30 * 60 * 1000) {
         req.session.destroy(err => {
             if (err) {
                 console.error('Erro ao destruir sessão:', err);
             }
+            // *** CORREÇÃO DO TypeError AQUI: Garante que req.headers.accept existe ***
+            if (req.xhr || (req.headers.accept && req.headers.accept.includes('json')) || req.originalUrl.startsWith('/api/')) {
+                return res.status(401).json({ sucesso: false, mensagem: 'Sessão expirada. Por favor, faça login novamente.' });
+            } else {
+                return res.redirect('/view/login.html?sessaoExpirada=true');
+            }
         });
-        // Determina se a requisição é de API (XHR/fetch) ou navegação direta
-        if (req.xhr || req.headers.accept.includes('json') || req.originalUrl.startsWith('/api/')) {
-            // Se for requisição de API, retorna um erro JSON 401
-            return res.status(401).json({ sucesso: false, mensagem: 'Sessão expirada. Por favor, faça login novamente.' });
-        } else {
-            // Se for navegação direta, redireciona para a página de login
-            return res.redirect('/view/login.html?sessaoExpirada=true');
-        }
+    } else {
+        // Se a sessão está OK e não expirou, continua
+        next();
     }
-    next();
 });
 
-// Servir arquivos estáticos (CSS, JS, Imagens) e páginas de visualização
-// As rotas de login e o diretório 'view' são servidos estaticamente
-app.use('/view/login.html', express.static(path.join(__dirname, 'view', 'login.html')));
-app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
-app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
-app.use('/imagens', express.static(path.join(__dirname, 'public', 'imagens')));
-app.use('/view', express.static(path.join(__dirname, 'view'))); // Serve todo o diretório 'view' para acesso direto
 
-// Protege o index.html, garantindo que o usuário esteja logado
+// 5. Definição das Rotas do Aplicativo (APÓS o middleware de autenticação)
+
+// Rota para o index.html (agora protegida pelo middleware)
 app.get('/view/index.html', (req, res) => {
-    if (!req.session.usuario) {
-        return res.redirect('/view/login.html');
-    }
     res.sendFile(path.join(__dirname, 'view', 'index.html'));
 });
 
-//rotas 
-app.use('/', usuarioRoute);
-app.use('/', historicoRoute);
+// Montagem das Rotas (CORRIGIDO: REMOVIDA A LINHA DUPLICADA DE LOGIN)
+app.use('/', usuarioRoute); // Esta linha já inclui o router.post('/login', ...) e o router.get('/logout', ...)
+app.use('/api', historicoRoute); // Rotas de histórico serão /api/historico-atendimentos
 
 // Redirecionamento da raiz do site
 app.get('/', (req, res) => {
@@ -77,33 +115,7 @@ app.get('/', (req, res) => {
 });
 
 // Bloco de código para migração de senhas (comentado, como no seu original)
-// async function migrarSenhas() {
-//     try {
-//         const pool = await sql.connect(dbConfig);
-//         const result = await pool.request()
-//             .query('SELECT IdAdministrador, Senha FROM Administrador');
-//
-//         for (const usuario of result.recordset) {
-//             if (usuario.Senha.startsWith('$2b$')) continue; // Evita recriptografar senhas já com hash
-//
-//             const senhaHash = await bcrypt.hash(usuario.Senha, 10);
-//
-//             await pool.request()
-//                 .input('Id', sql.Int, usuario.IdAdministrador)
-//                 .input('SenhaHash', sql.VarChar, senhaHash)
-//                 .query('UPDATE Administrador SET Senha = @SenhaHash WHERE IdAdministrador = @Id');
-//
-//             console.log(`Senha criptografada para usuário ID ${usuario.IdAdministrador}`);
-//         }
-//
-//         console.log('Todas as senhas foram criptografadas com sucesso.');
-//     } catch (err) {
-//         console.error('Erro ao criptografar senhas:', err);
-//     }
-// }
-
-// Chamada automática na inicialização (comentada, como no seu original)
-// migrarSenhas();
+// ...
 
 // Iniciar o servidor
 app.listen(PORT, () => {

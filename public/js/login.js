@@ -29,16 +29,30 @@ function verificaUsuario(event) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario, senha })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            // Se a resposta HTTP não for 2xx, tenta ler o JSON de erro
+            return res.json().then(errorData => {
+                throw new Error(errorData.mensagem || `Erro HTTP: ${res.status} ${res.statusText}`);
+            });
+        }
+        return res.json();
+    })
     .then(data => {
         if (data.sucesso) {
-            window.location.href = '/view/index.html';
+            // *** MUDANÇA AQUI: Verifica se há redirectUrl na resposta do backend ***
+            if (data.redirectUrl) {
+                window.location.href = data.redirectUrl;
+            } else {
+                // Fallback, caso o backend não envie (mas com as últimas mudanças, deve enviar)
+                window.location.href = '/view/index.html';
+            }
         } else {
             alert(data.mensagem || 'Usuário ou senha inválidos.');
         }
     })
     .catch(err => {
-        alert('Erro ao tentar logar.');
-        console.error(err);
+        console.error('Erro ao tentar logar:', err); // Log mais detalhado
+        alert('Erro ao tentar logar: ' + err.message); // Exibe a mensagem de erro
     });
 }

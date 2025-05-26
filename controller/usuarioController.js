@@ -15,7 +15,8 @@ const usuarioController = {
                     tipo: usuarioLogado.tipo || usuarioLogado.Tipo,
                     loginTime: Date.now()
                 };
-                res.json({ sucesso: true });
+                // *** MUDANÇA AQUI ***
+                res.json({ sucesso: true, redirectUrl: '/view/index.html' }); // Envia a URL para o frontend
             } else {
                 res.json({ sucesso: false, mensagem: 'Usuário ou senha inválidos.' });
             }
@@ -39,7 +40,7 @@ const usuarioController = {
                 if (err) {
                     console.error('Erro ao destruir sessão:', err);
                     return res.status(500).json({ sucesso: false, mensagem: 'Erro ao encerrar sessão' });
-                }
+                }   
                 res.redirect('/view/login.html?logout=true');
             });
         } catch (error) {
