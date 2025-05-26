@@ -10,90 +10,65 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <link rel="shortcut icon" href="/imagens/logotipoCogitareSemFundo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
     <div class="dashboard-container">
-       <!--SIDEBAR-->
-    <nav class="sidebar">
-      <div class="sidebar-top-wrapper">
-        <div class="sidebar-top">
-          <a href="#" class="logo__wrapper">
-            <img src="/imagens/logotipoCogitareSemFundo.png" alt="Cogitare" class="logo-small">
-            <span class="hide company-name">Cogitare</span>
-          </a>
-        </div>
-        <button class="expand-btn" type="button">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6.01 2.72L10.36 7.07C10.87 7.58 10.87 8.42 10.36 8.93L6.01 13.28" stroke="currentColor"
-              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-      </div>
+        <nav class="sidebar">
+            <div class="sidebar-top-wrapper">
+                <div class="sidebar-top">
+                    <a href="#" class="logo__wrapper">
+                        <img src="/imagens/logotipoCogitareSemFundo.png" alt="Cogitare" class="logo-small">
+                        <span class="hide company-name">Cogitare</span>
+                    </a>
+                </div>
+                <button class="expand-btn" type="button">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.01 2.72L10.36 7.07C10.87 7.58 10.87 8.42 10.36 8.93L6.01 13.28" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
 
-      <div class="sidebar-links">
-        <ul>
-          <li><a href="/view/index.html" class="tooltip"><i data-lucide="layout-dashboard"></i><span
-                class="link hide">Painel</span><span class="tooltip__content">Painel</span></a></li>
-          <li><a href="/view/cuidador.html" class="tooltip"><i data-lucide="users"></i><span
-                class="link hide">Cuidadores</span><span class="tooltip__content">Cuidadores</span></a></li>
-          <li><a href="/view/responsavel.html" class="tooltip"><i data-lucide="users"></i><span
-                class="link hide">Responsáveis</span><span class="tooltip__content">Responsáveis</span></a></li>
-          <li><a href="/view/idoso.html" class="tooltip"><i data-lucide="users"></i><span
-                class="link hide">Idosos</span><span class="tooltip__content">Idosos</span></a></li>
-          <li><a href="/view/atendimento.html" class="tooltip"><i data-lucide="calendar-check"></i><span
-                class="link hide">Atendimentos</span><span class="tooltip__content">Atendimentos</span></a></li>
-          <li><a href="/view/pagamento.html" class="tooltip"><i data-lucide="wallet"></i><span
-                class="link hide">Pagamentos</span><span class="tooltip__content">Pagamentos</span></a></li>
-          <li><a href="/view/historico.html" class="tooltip"><i data-lucide="history"></i><span
-                class="link hide">Histórico</span><span class="tooltip__content">Histórico</span></a></li>
-          <li><a href="/logout" class="tooltip"><i data-lucide="log-out"></i><span class="link hide">Sair</span><span
-                class="tooltip__content">Sair</span></a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- SIDEBAR -->
-
-        <!-- MAIN CONTENT -->
+            <div class="sidebar-links">
+                <ul>
+                    <li><a href="/view/index.html" class="tooltip"><i data-lucide="layout-dashboard"></i><span
+                                class="link hide">Painel</span><span class="tooltip__content">Painel</span></a></li>
+                    <li><a href="/view/cuidador.html" class="tooltip"><i data-lucide="users"></i><span
+                                class="link hide">Cuidadores</span><span class="tooltip__content">Cuidadores</span></a></li>
+                    <li><a href="/view/responsavel.html" class="tooltip"><i data-lucide="users"></i><span
+                                class="link hide">Responsáveis</span><span class="tooltip__content">Responsáveis</span></a></li>
+                    <li><a href="/view/idoso.html" class="tooltip"><i data-lucide="users"></i><span
+                                class="link hide">Idosos</span><span class="tooltip__content">Idosos</span></a></li>
+                    <li><a href="/view/atendimento.html" class="tooltip"><i data-lucide="calendar-check"></i><span
+                                class="link hide">Atendimentos</span><span class="tooltip__content">Atendimentos</span></a></li>
+                    <li><a href="/view/pagamento.html" class="tooltip"><i data-lucide="wallet"></i><span
+                                class="link hide">Pagamentos</span><span class="tooltip__content">Pagamentos</span></a></li>
+                    <li><a href="/view/historico.html" class="tooltip"><i data-lucide="history"></i><span
+                                class="link hide">Histórico</span><span class="tooltip__content">Histórico</span></a></li>
+                    <li><a href="/logout" class="tooltip"><i data-lucide="log-out"></i><span class="link hide">Sair</span><span
+                                class="tooltip__content">Sair</span></a></li>
+                </ul>
+            </div>
+        </nav>
         <main class="main-content">
             <header>
                 <h1>Histórico de Atendimentos</h1>
             </header>
 
-            <section class="cards">
-                <div class="card">
-                    <h2>Idoso: Maria Clara</h2>
-                    <p>Data: 15/05/2025</p>
-                    <p>Serviço: Enfermagem</p>
-                    <p>Profissional: Ana Paula</p>
-                    <p>Status: <span class="status finalizado">Finalizado</span></p>
-
-                </div>
-                <div class="card">
-                    <h2>Idoso: João Pedro</h2>
-                    <p>Data: 14/05/2025</p>
-                    <p>Serviço: Psicologia</p>
-                    <p>Profissional: Beatriz Lopes</p>
-                    <p>Status: <span class="status finalizado">Finalizado</span></p>
-
-                </div>
-                <div class="card">
-                    <h2>Idoso: Helena Souza</h2>
-                    <p>Data: 13/05/2025</p>
-                    <p>Serviço: Fisioterapia</p>
-                    <p>Profissional: Rodrigo Silva</p>
-                    <p>Status: <span class="status finalizado">Finalizado</span></p>
-
-                </div>
-            </section>
+            <section class="cards" id="historicoCardsContainer">
+                </section>
         </main>
     </div>
 
     <script>
-        lucide.createIcons();
+        lucide.createIcons(); // Inicializa os ícones Lucide
     </script>
     <script src="/js/sidebar.js"></script>
+
+    <script src="/js/historico.js">
+        
+    </script>
 </body>
 
 </html>
