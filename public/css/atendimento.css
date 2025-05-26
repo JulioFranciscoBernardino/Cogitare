@@ -1,136 +1,111 @@
+/* Geral */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Work Sans', sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+}
+
+/* Header da main */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 1rem;
+  margin-left: 15rem;
+  transition: margin-left 0.2s ease-in-out;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 1rem;
+  transition: margin-left 0.2s ease-in-out;
+}
+
+.search-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Tabela */
 .table-container {
-    margin-left: 270px;
-    margin-top: 30px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
-  }
-  
-  .atendimento-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px;
-  }
-  
-  .atendimento-table thead {
-    background-color: #a26fff;
-    color: white;
-  }
-  
-  .atendimento-table th, .atendimento-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .atendimento-table tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .status {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  
-  .status-concluido {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .status-pendente {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  
-  .status-cancelado {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .btn-detalhes {
-    background-color: #a26fff;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-  }
-  
-  .dashboard-container {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  /* SIDEBAR */
-  .sidebar {
-    width: 250px;
-    background-color: #a26fff;
-    color: white;
-    padding: 20px;
-    position: fixed;
-    height: 100vh;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-  }
-  
-  .sidebar .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 40px;
-  }
-  
-  .sidebar nav ul {
-    list-style: none;
-  }
-  
-  .sidebar nav ul li {
-    margin-bottom: 20px;
-  }
-  
-  .sidebar nav ul li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .sidebar nav ul li a:hover {
-    opacity: 0.8;
-    transform: translateX(5px);
-  }
-  
-  .sidebar nav ul li a i {
-    width: 20px;
-    height: 20px;
-  }
+  padding: 2rem;
+  overflow-x: auto;
+  margin-left: 15rem; /* afastando do sidebar */
+  transition: margin-left 0.2s ease-in-out;
 
-  h1, input{
-    margin-left: 50px;
-  }
+}
 
-  .search-input {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 250px;
+body.collapsed .table-container {
+  margin-left: 5rem; /* espaço para sidebar colapsada */
+}
+
+body.collapsed .header {
+  margin-left: 5rem; /* espaço para sidebar colapsada */
+}
+
+body.collapsed .header h1{
+  margin-left: 1rem; /* espaço para sidebar colapsada */
+}
+
+.atendimento-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.atendimento-table th,
+.atendimento-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.atendimento-table td[data-label]::before {
+  content: attr(data-label) ": ";
+  font-weight: 600;
+  display: none; /* para mobile, pode ativar depois */
+}
+
+.status {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.status-concluido {
+  background-color: #d1f7d6;
+  color: #24732d;
+}
+
+/* Botão de detalhes */
+.btn-detalhes {
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.btn-detalhes:hover {
+  background-color: #4338ca;
 }

@@ -1,3 +1,4 @@
+/* RESET GERAL */
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   background-color: #f5f5f5;
   color: #333;
 }
@@ -62,7 +63,7 @@ body {
   height: 20px;
 }
 
-/* MAIN CONTENT */
+/* CONTEÚDO PRINCIPAL */
 .main-content {
   margin-left: 250px;
   padding: 40px;
@@ -76,6 +77,7 @@ body {
 
 .main-content header h1 {
   font-size: 2rem;
+  font-weight: 600;
 }
 
 /* RESPONSIVO */
