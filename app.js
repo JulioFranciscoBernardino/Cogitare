@@ -9,7 +9,6 @@ const sql = require('mssql');
 const usuarioRoute = require('./routes/usuarioRoute');
 const historicoRoute = require('./routes/historicoRoute');
 const idososRoute = require('./routes/idosoRoute');
-const dadosAuxiliaresRoute = require('./routes/dadosAuxiliaresRoute');
 
 
 const app = express();
@@ -90,7 +89,6 @@ app.get('/view/index.html', (req, res) => {
 app.use('/', usuarioRoute);
 app.use('/api', historicoRoute);
 app.use('/api', idososRoute);
-app.use('/api', dadosAuxiliaresRoute);
 
 
 
