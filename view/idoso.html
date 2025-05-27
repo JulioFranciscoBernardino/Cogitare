@@ -7,9 +7,10 @@
   <title>Cogitare - Idosos</title>
   <link rel="stylesheet" href="/css/idoso.css" />
   <link rel="stylesheet" href="/css/sidebar.css" />
+  <link rel="stylesheet" href="/css/modal.css" /> <!-- Novo CSS do modal -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="/imagens/logotipoCogitareSemFundo.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="/imagens/logotipoCogitareSemFundo.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -19,11 +20,11 @@
       <div class="sidebar-top-wrapper">
         <div class="sidebar-top">
           <a href="#" class="logo__wrapper">
-            <img src="/imagens/logotipoCogitareSemFundo.png" alt="Cogitare" class="logo-small">
+            <img src="/imagens/logotipoCogitareSemFundo.png" alt="Cogitare" class="logo-small" />
             <span class="hide company-name">Cogitare</span>
           </a>
         </div>
-        <button class="expand-btn" type="button">
+        <button class="expand-btn" type="button" aria-label="Expandir sidebar">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6.01 2.72L10.36 7.07C10.87 7.58 10.87 8.42 10.36 8.93L6.01 13.28" stroke="currentColor"
               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -57,26 +58,70 @@
     <main class="main-content">
       <header class="header">
         <h1>Lista de Idosos</h1>
-        <input type="text" placeholder="Buscar idoso..." class="search-input" />
+        <input type="text" placeholder="Buscar idoso..." class="search-input" aria-label="Buscar idoso" />
       </header>
+
+      <!-- Botão para mostrar o formulário -->
+      <button id="btnToggleForm" type="button" style="margin-bottom: 1rem;">Adicionar Idoso</button>
 
       <section class="card-grid">
         <!-- Idoso exemplo -->
-        <div class="card">
-          <!-- Caminho da imagem ajustado para /public/img -->
-          <img src="/images/idoso1.jpg" alt="Foto Idoso" />
-          <div class="card-info">
-            <h3>José da Silva</h3>
-            <p>Idade: 82 anos</p>
-            <p>Condições: Hipertensão, Diabetes</p>
-            <a href="/view/responsavel.html?id=1" class="link-responsavel">Ver Responsável</a>
-          </div>
-        </div>
         <!-- Repita este bloco para mais idosos -->
       </section>
     </main>
   </div>
+
+  <!-- Modal para formulário -->
+  <div id="modalOverlay" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+    <div class="modal-content">
+      <button class="btn-fechar-modal" id="btnCloseModal" aria-label="Fechar formulário">&times;</button>
+      <h2 id="modalTitle">Adicionar Novo Idoso</h2>
+      <form id="formIdoso" class="form-inserir-idoso">
+        <label for="idResponsavel">Responsável:</label>
+        <select id="idResponsavel" name="idResponsavel" required>
+          <!-- Opções dinâmicas -->
+        </select>
+
+        <label for="idMobilidade">Mobilidade:</label>
+        <select id="idMobilidade" name="idMobilidade" required>
+          <!-- Opções dinâmicas -->
+        </select>
+
+        <label for="idNivelAutonomia">Nível de Autonomia:</label>
+        <select id="idNivelAutonomia" name="idNivelAutonomia" required>
+          <!-- Opções dinâmicas -->
+        </select>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" maxlength="100" required />
+
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input type="date" id="dataNascimento" name="dataNascimento" required />
+
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" name="sexo" required>
+          <option value="">Selecione</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Outro">Outro</option>
+        </select>
+
+        <label for="cuidadosMedicos">Cuidados Médicos:</label>
+        <textarea id="cuidadosMedicos" name="cuidadosMedicos" rows="3" placeholder="Descreva os cuidados médicos"></textarea>
+
+        <label for="descricaoExtra">Descrição Extra:</label>
+        <textarea id="descricaoExtra" name="descricaoExtra" rows="3" placeholder="Informações adicionais"></textarea>
+
+        <label for="fotoUrl">URL da Foto:</label>
+        <input type="url" id="fotoUrl" name="fotoUrl" placeholder="https://exemplo.com/foto.jpg" />
+
+        <button type="submit">Salvar Idoso</button>
+      </form>
+    </div>
+  </div>
+
   <script src="/js/sidebar.js"></script>
+  <script src="/js/idoso.js"></script>
   <script>lucide.createIcons();</script>
 </body>
 
